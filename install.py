@@ -54,7 +54,7 @@ def install(keyword):
 
     
     # Downloading wget
-    command = f"wget -i https://files.pythonhosted.org/packages/47/6a/62e288da7bcda82b935ff0c6cfe542970f04e29c756b0e147251b2fb251f/wget-3.2.zip > /tmp/encore/pkgs/wget-3.2.zip"
+    command = f"curl https://files.pythonhosted.org/packages/47/6a/62e288da7bcda82b935ff0c6cfe542970f04e29c756b0e147251b2fb251f/wget-3.2.zip --output /tmp/encore/pkgs/wget-3.2.zip"
     os.system(command)
 
     # Unpacking and installing wget
