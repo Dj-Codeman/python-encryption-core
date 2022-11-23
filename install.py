@@ -61,7 +61,7 @@ def install(keyword):
     # file settings
     mode  = 400
 
-    hit_list ["/opt/encore", "/etc/encore", "/var/encore", "/var/log/encore" ]
+    hit_list = ["/opt/encore", "/etc/encore", "/var/encore", "/var/log/encore" ]
 
     for path in hit_list:
         
