@@ -135,8 +135,8 @@ def install(keyword):
 
 arguments = int(len(sys.argv))
 
-if arguments == 1: 
-    keyword = str(sys.argv[1])
+if arguments == 2: 
+    keyword = str(sys.argv[2])
 else :
     keyword = "magic"
 
