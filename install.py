@@ -70,10 +70,10 @@ def install(keyword):
     # After the folder trees have been created the log can be initialized for the first time
     start_log()
 
-    hit_list = ["conf", "encore", "functions.py", "install.py", "encrypt"]
+    hit_list = ["conf.py", "encore", "functions.py", "install.py", "encrypt"]
 
     for files in hit_list:
-        
+
         src = f"./{files}"
         dst = f"/opt/encore/{files}"
         home = f"/usr/local/bin{files}"
