@@ -70,8 +70,6 @@ def install(keyword):
     # After the folder trees have been created the log can be initialized for the first time
     start_log()
 
-    base = "/opt/encore"
-    dst = f"{base}/{files}"
     hit_list = ["conf", "encore", "functions.py", "install.py", "encrypt"]
 
     # Cheking for the encrypt script first
@@ -81,8 +79,7 @@ def install(keyword):
         write_log("secret sauce intact")
     else :
         print("Falling back to the unpatched encrypt script")
-        url = str("https://raw.githubusercontent.com/fastsitephp/fastsitephp/master/scripts/shell/bash/encrypt.sh")
-        filename = wget.download(url, out="/opt/encore/scripts/encrypt")
+        sys.exit("Not Implemented")
 
     if os.path.exists(filename) == False:
         sys.exit("Encrypt file was not downloaded or imported")
