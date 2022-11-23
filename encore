@@ -7,7 +7,7 @@ import wget
 from functions import *
 
 if not os.geteuid() == 0:
-    sys.exit("\nYOU SHALL NOT PASS. you have to be rootn")
+    sys.exit("YOU SHALL NOT PASS. you have to be root")
 
 
 def show_help():
