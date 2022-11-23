@@ -61,9 +61,6 @@ def install(keyword):
     command = f"unzip /tmp/encore/pkgs/wget-3.2.zip -d /tmp/encore/pkgs/"
     os.system(command)
 
-    command = f"sed -i '/long_description=open('README.txt').read(),/d' /tmp/encore/pkgs/wget-3.2/setup.py "
-    os.system(command)
-
     command = f"python3 /tmp/encore/pkgs/wget-3.2/setup.py install"
     os.system(command)
 
