@@ -6,7 +6,6 @@ import warnings
 import os
 import sys
 import shutil
-import pyjq
 import json
 from conf import *
 
@@ -164,13 +163,11 @@ def generate_keys():
         "hash": md5_sum
     }
 
-    result1 = pyjq.one(
-        '{version: .version , number: .number , location: .location , parent: .parent , hash: .hash}', index1)
     # print(result1)
 
     # writing the index
     with open(index, "w") as write_file:
-        json.dump(result1, write_file, indent=2)
+        json.dump(index1, write_file, indent=2)
         tmp_log = f"Key index pair: Master Created\n"
         write_log(tmp_log)
 
@@ -203,12 +200,10 @@ def generate_keys():
             "hash": md5_sum
         }
 
-        result1 = pyjq.one(
-            '{version: .version , number: .number , location: .location , parent: .parent , hash: .hash}', index1)
 
         # writing the index
         with open(index, "w") as write_file:
-            json.dump(result1, write_file, indent=2)
+            json.dump(index1, write_file, indent=2)
             tmp_log = f"Key index pair: {i} Created\n"
             write_log(tmp_log)
 
@@ -352,11 +347,9 @@ def fwrite(path, object_class, object_item):
             }
             pln_json = f"{base_enc_json}.jn"
             enc_json = f"{base_enc_json}.json"
-            result1 = pyjq.one(
-                '{version: .version , name: .name , class: .class , key: .key , uid: .uid , path: .path , dir: .dir}', index1)
 
             with open(pln_json, "w") as write_file:
-                json.dump(result1, write_file, indent=2)
+                json.dump(index1, write_file, indent=2)
 
             if os.path.exists(pln_json) == True:
                 tmp_log = f"Clear map {pln_json} created"

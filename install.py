@@ -54,35 +54,7 @@ def install(keyword):
     command = "mkdir -pv /tmp/encore/pkgs"
     os.system(command)
     
-    #! DEPRICATE THESE TWO HOES
-    
-    # # Downloading wget
-    # command = f"curl https://files.pythonhosted.org/packages/47/6a/62e288da7bcda82b935ff0c6cfe542970f04e29c756b0e147251b2fb251f/wget-3.2.zip --output /tmp/encore/pkgs/wget-3.2.zip"
-    # os.system(command)
-
-    # # Unpacking and installing wget
-    # command = f"unzip /tmp/encore/pkgs/wget-3.2.zip"
-    # os.system(command)
-
-
-    # command = f"python3 ./wget-3.2/setup.py install"
-    # os.system(command)
-
-    # import wget
-
-
-    # # Downloding pyjq
-    # command = f"curl https://files.pythonhosted.org/packages/14/c8/03bc4f41abe4b1e900d9bc1f1cebdb79f998a5563364e6ea1533f7b228f8/pyjq-2.6.0.tar.gz --output /tmp/encore/pkgs/pyjq-1.0.tar.gz"
-    # os.system(command)
-    
-    # command = f"tar -xvf /tmp/encore/pkgs/pyjq-1.0.tar.gz"
-    # try :
-    #     os.system(command)
-    # except:
-    #     sys.exit("Could not unzip pyjq. Please try again")
-
-    # subprocess.call("python3 pyjq-1.0/setup.py build", shell=True)
-    # subprocess.call("python3 pyjq-1.0/setup.py install", shell=True)
+    #  for downloads use the unix curl with os.system
 
     import functions
     
