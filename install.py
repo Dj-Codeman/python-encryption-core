@@ -82,7 +82,7 @@ def install(keyword):
 
     os.symlink("/opt/encore/encrypt", "/usr/local/bin/encrypt")
     os.symlink("/opt/encore/encore", "/usr/local/bin/encore")
-    os.system("chmod +xv /usr/local/bin/*")
+    os.system("chmod +x /usr/local/bin/*")
 
     # Cheking for the encrypt script first
     exists = os.path.exists("/usr/local/bin/encrypt")
