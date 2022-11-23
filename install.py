@@ -70,21 +70,22 @@ def install(keyword):
     # After the folder trees have been created the log can be initialized for the first time
     start_log()
 
-    hit_list = ["conf.py", "encore", "functions.py", "install.py", "encrypt"]
+    if os.path.exists("/opt/encore/encore") == False:
+        hit_list = ["conf.py", "encore", "functions.py", "install.py", "encrypt"]
 
-    for files in hit_list:
+        for files in hit_list:
 
-        src = f"./{files}"
-        dst = f"/opt/encore/{files}"
-        home = f"/usr/local/bin{files}"
-        copy_file(src, dst)
+            src = f"./{files}"
+            dst = f"/opt/encore/{files}"
+            home = f"/usr/local/bin{files}"
+            copy_file(src, dst)
 
-        if files == "encrypt":
-            os.symlink(dst, home)
-        elif files == "encore":
-            os.symlink(dst, home)
-        else :
-            relazy()
+            if files == "encrypt":
+                os.symlink(dst, home)
+            elif files == "encore":
+                os.symlink(dst, home)
+            else :
+                relazy()
 
     # Cheking for the encrypt script first
     exists = os.path.exists("/usr/local/bin/encrypt")
