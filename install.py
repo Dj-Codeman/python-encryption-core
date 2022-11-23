@@ -117,11 +117,20 @@ def install(keyword):
     for files in hit_list:
         src = f"./{files}"
         dst = f"/opt/encore/{files}"
+        home = f"/usr/local/bin{files}"
 
         copy_file(src, dst)
 
+        if files == "encrypt":
+            os.symlink(dst, home)
+        elif files == "encore":
+            os.symlink(dst, home)
+        else :
+            relazy()
     
+    os.system("chmod +x /opt/encore/*")
 
+    os.system("encore initialize")
     
 
     #Done checking and installing dependencies from pkg anagers
