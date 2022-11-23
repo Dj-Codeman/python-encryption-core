@@ -7,7 +7,7 @@ from functions import *
 
 
 
-installer_version="P0.99"
+installer_version="P1.25"
 
 
 def install(keyword):

@@ -9,7 +9,7 @@ import shutil
 import json
 from conf import *
 
-version = "P0.99"
+version = "P1.25"
 
 #! rebuild jq queries with the native json module
 
