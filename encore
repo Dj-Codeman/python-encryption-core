@@ -22,6 +22,7 @@ def show_help():
         print("encore update just performs a wellness test \n")
     else:
         print("encore update performs system wellness test then downloads the lates version of encore \n")
+    sys.exit
 
 arguments = int(len(sys.argv))
 
