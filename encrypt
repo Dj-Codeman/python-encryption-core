@@ -1,52 +1,6 @@
 #!/usr/bin/env bash
 
 # =============================================================================
-#
-#  ------------------------------------------------------------------
-#  Encrypt or Decrypt a file and generate Secure Keys for Encryption.
-#  ------------------------------------------------------------------
-#
-#  Author:   Conrad Sollitt
-#  Created:  2016 to 2020
-#  License:  MIT
-#
-#  Developer Overview and Notes
-#  - This is a Bash Script that runs from shell/terminal on Linux, Unix,
-#    and macOS. It also runs on Windows using Windows Subsystem for Linux.
-#  - To run, call using Bash:
-#      bash encrypt.sh
-#    Or set execute permission (if needed) and run directly:
-#      chmod +x encrypt.sh
-#      ./encrypt.sh
-#  - If this script runs without any parameters it will show
-#    the help topic with a list of options and examples.
-#  - This script includes the ability to run Unit Tests using:
-#      bash encrypt.sh -t
-#  - This script has no dependencies other than commands that are expected
-#    to be installed on most Linux OS's. The actual commands for encryption
-#    and decryption work with FreeBSD, however FreeBSD does not include
-#    Bash by default. Red Hat, CentoOS, Fedora and some Linux installs won't
-#    have the required command [xxd] installed by default so this script
-#    provides a warning and info on how to install if needed.
-#  - General output messages such as the help topic are 80 characters or less
-#    however lines of code may be around 120 characters in length.
-#  - This script is linted using [https://www.shellcheck.net/]
-#    Currently this script is too large to use the online site so ShellCheck
-#    has to be installed to lint. More important than linting are the
-#    Unit Tests for this file as it is carefully tested.
-#    An option to use ShellCheck now:
-#       - Create a Linux Cloud Instance:
-#           - sudo apt-get update # Or use the package manager for your OS
-#           - sudo apt-get install shellcheck
-#           - shellcheck encrypt.sh
-#       - Or on Mac (first install homebrew):
-#           - brew install shellcheck
-#           - Mac uses an older version of shellcheck so run:
-#             [shellcheck encrypt.sh --exclude=SC1117]
-#       - If it has no output then it ran successfully
-#  - This file is included with FastSitePHP [https://www.fastsitephp.com/]
-#
-# =============================================================================
 
 # Set Bash Options for this Script
 set -o pipefail
@@ -124,102 +78,7 @@ check_for_xxd ()
 # Help Text, called when passing the
 # [-h] option or for invalid or no parameters.
 # -----------------------------------------------------------------------------
-show_help ()
-{
-    echo ""
-    echo -e "${FONT_BOLD}${FONT_UNDERLINE}Overview:${FONT_RESET}"
-    echo "    Encrypt or Decrypt a file using either a Secure Key or a Password."
-    echo ""
-    echo "    This script uses OpenSSL with strong Security Settings and Algorithms:"
-    echo "      - Encryption:    AES-256-CBC"
-    echo "      - Verification:  HMAC/SHA-256"
-    echo "      - Password:      PBKDF2 using SHA-512 with 200,000 Iterations"
-    echo ""
-    echo "    A Secure Key can be generated using the [-g] option. If using a"
-    echo "    Password instead of a Key expect an extra 1 to 3 seconds of"
-    echo "    processing time per file."
-    echo ""
-    echo "    Unit Tests to verify the system can be run using the [-t] option;"
-    echo "    unit tests usually run in 3 to 20 seconds. This script can encrypt"
-    echo "    and decrypt files of any size supported by the OS. To verify your"
-    echo "    system for large files use the [-l] option; this option will create"
-    echo "    files of 1 GB and 3 GB in size and requires at least 9 GB of disk"
-    echo "    space. The [-l] option may take anywhere from several minutes to"
-    echo "    over 30 minutes depending on your system and disk speed."
-    echo ""
-    echo -e "${FONT_BOLD}${FONT_UNDERLINE}Usage:${FONT_RESET}"
-    script="    bash ${SCRIPT_NAME}"
-    infile_param="${FONT_BOLD}-i${FONT_RESET} ${FONT_DIM}<input-file>${FONT_RESET}"
-    outfile_param="${FONT_BOLD}-o${FONT_RESET} ${FONT_DIM}<output-file>${FONT_RESET}"
-    file_param="${infile_param} ${outfile_param}"
-    key_param="${FONT_BOLD}-k${FONT_RESET} ${FONT_DIM}<key>${FONT_RESET}"
-    pass_param="${FONT_BOLD}-p${FONT_RESET} ${FONT_DIM}<password>${FONT_RESET}"
-    echo -e "${script} ${FONT_BOLD}-g${FONT_RESET}"
-    echo -e "${script} ${FONT_BOLD}-e${FONT_RESET} ${file_param} ${key_param}"
-    echo -e "${script} ${FONT_BOLD}-e${FONT_RESET} ${file_param} ${pass_param}"
-    echo -e "${script} ${FONT_BOLD}-e${FONT_RESET} ${file_param}"
-    echo -e "${script} ${FONT_BOLD}-e${FONT_RESET} ${infile_param}"
-    echo -e "${script} ${FONT_BOLD}-d${FONT_RESET} ${file_param} ${key_param}"
-    echo -e "${script} ${FONT_BOLD}-d${FONT_RESET} ${file_param} ${pass_param}"
-    echo -e "${script} ${FONT_BOLD}-d${FONT_RESET} ${file_param}"
-    echo -e "${script} ${FONT_BOLD}-d${FONT_RESET} ${infile_param}"
-    echo -e "${script} ${FONT_BOLD}-h${FONT_RESET}"
-    echo -e "${script} ${FONT_BOLD}-t${FONT_RESET}"
-    echo -e "${script} ${FONT_BOLD}-l${FONT_RESET}"
-    echo -e "${script} ${FONT_BOLD}-b${FONT_RESET}"
-    echo -e "    ${FONT_DIM}# Or run directly in the same directory:${FONT_RESET}"
-    echo -e "    ./${SCRIPT_NAME} -g"
-    echo -e "    ${FONT_DIM}# If needed set execute permissions:${FONT_RESET}"
-    echo -e "    chmod +x ${SCRIPT_NAME}"
-    echo -e "    ${FONT_DIM}# To install as a command (if not yet installed):${FONT_RESET}"
-    echo -e "    sudo mv ${SCRIPT_NAME} /usr/local/bin/encrypt"
-    echo -e "    ${FONT_DIM}# Once installed as a command you can run it from any directory:${FONT_RESET}"
-    echo -e "    encrypt"
-    echo ""
-    echo -e "${FONT_BOLD}${FONT_UNDERLINE}Options:${FONT_RESET}"
-    echo "    -h    Help"
-    echo "    -g    Generate a new Key, this is random and changes every time"
-    echo "    -e    Encrypt a file, requires options [-i], [-o], and ([-k] or [-p])"
-    echo "    -d    Decrypt a file, requires options [-i], [-o], and ([-k] or [-p])"
-    echo "    -i    Input file, file to encrypt if using [-e] or decrypt if using [-d]"
-    echo "    -o    Output file, this file will be created. Optional, defaults to: \".enc\""
-    echo "    -k    Key for encryption or decryption"
-    echo "    -p    Password for encryption or decryption"
-    echo "    -t    Run Core Unit Tests"
-    echo "    -l    Run Large File Tests, this may take a while"
-    echo "    -b    Run Unit Tests for PBKDF2, this is for Developer Testing"
-    echo ""
-    echo -e "${FONT_BOLD}${FONT_UNDERLINE}Examples:${FONT_RESET}"
-    echo -e "    ${FONT_DIM}# Create a test file [test.txt]${FONT_RESET}"
-    echo "    echo \"This is a Test.\" > test.txt"
-    echo -e "    ${FONT_DIM}# Generate a Key and save it to file [encryption.key]${FONT_RESET}"
-    echo "    bash ${SCRIPT_NAME} -g > encryption.key"
-    echo -e "    ${FONT_DIM}# Encrypt the file to [test.enc]${FONT_RESET}"
-    # shellcheck disable=SC2016
-    echo "    bash ${SCRIPT_NAME} -e -i test.txt -o test.enc -k" '"$(cat encryption.key)"'
-    echo -e "    ${FONT_DIM}# Decrypt the file to [test.dec]${FONT_RESET}"
-    # shellcheck disable=SC2016
-    echo "    bash ${SCRIPT_NAME} -d -i test.enc -o test.dec -k" '"$(cat encryption.key)"'
-    echo ""
-    echo -e "    ${FONT_DIM}# View the start or end of an of an encrypted file:${FONT_RESET}"
-    echo '    head -c 256 test.enc | hexdump -C -v'
-    echo '    tail -c 256 test.enc | hexdump -C -v'
-    echo ""
-    echo -e "    ${FONT_DIM}# When using the default '.enc' file extension${FONT_RESET}"
-    echo -e "    ${FONT_DIM}# the name of the output file is not required${FONT_RESET}"
-    echo "    bash ${SCRIPT_NAME} -e -i test.txt"
-    echo "    bash ${SCRIPT_NAME} -d -i test.txt.enc"
-    echo ""
-    echo -e "    ${FONT_DIM}# If a file name contains spaces then use quotes.${FONT_RESET}"
-    echo -e "    ${FONT_DIM}# This exmple uses a password instead of a key.${FONT_RESET}"
-    # shellcheck disable=SC2016
-    echo "    bash ${SCRIPT_NAME}" '-e -i "test file.txt" -o "test file.enc" -p "Password123"'
-    echo ""
-    echo -e "    ${FONT_DIM}# If no key or password is passed to the command${FONT_RESET}"
-    echo -e "    ${FONT_DIM}# then you will be prompted for a password.${FONT_RESET}"
-    echo "    bash ${SCRIPT_NAME} -e -i test.txt -o test.enc"
-    echo ""
-}
+
 
 # -----------------------------------------------------------------------------
 # Get Command Line Options
@@ -252,10 +111,6 @@ get_options ()
             p) set_key_or_password "password" "${OPTARG}" ;;
             g)
                 generate_key
-                exit 0
-                ;;
-            h)
-                show_help
                 exit 0
                 ;;
             t)
@@ -780,16 +635,6 @@ run_unit_tests ()
     unit_test_known_file_password
     unit_test_run_script_password
     unit_test_decrypt_error_password
-    unit_test_end
-}
-
-# ---------------------------------------------------------
-# Run Large Files Tests. This may take a while to run.
-# ---------------------------------------------------------
-run_large_file_tests ()
-{
-    unit_test_start "Running Large File Test"
-    unit_test_large_files
     unit_test_end
 }
 
@@ -1450,80 +1295,7 @@ unit_test_script_errors ()
     verify_exit_status $? $ERR_FILE_MISSING
 }
 
-# -----------------------------------------------------------------------------
-# This test creates, encrypts and decrypts large files (1 GB and 3 GB)
-# At least 9 GB of disk space is needed. On some 32-Bit OS's files are
-# limited to 2 GB which is why 3 GB is used. First the 1 GB check makes
-# sure the function works with large files then if the 3 GB check passes
-# files of any size should be able to be encrypted and decrypted with the OS.
-# -----------------------------------------------------------------------------
-unit_test_large_files ()
-{
-    # Setup Hard-coded Settings
-    echo -e "    ${FONT_BOLD}${FONT_UNDERLINE}Settings${FONT_RESET}"
-    key_type="key"
-    unit_test_setup_settings
 
-    # Define an Array of Tests, Bash does not support structs, objects, or
-    # multi-dimensional arrays so each Test is packed into a string separated
-    # by vertical bars (pipe character) '|'.
-    tests=(
-        "1 GB|1g|cd573cfaace07e7949bc0c46028904ff|6caa8477d12b6cafb47a2ddc2969bcbd"
-        "3 GB|3g|c698c87fb53058d493492b61f4c74189|f5aeeb7d2cd73d358783f39a3aaa5821"
-    )
-
-    # Loop by array index
-    for n in "${!tests[@]}"; do
-        # Parse the string of test parameters.
-        # By default Bash would parse a string on all spaces so change the
-        # IFS (Internal Field Separator) to a vertical bar '|' so that the
-        # string is parsed into an array of the correct format.
-        IFS='|'
-        # shellcheck disable=SC2206
-        a=(${tests[n]})
-        label=${a[0]}
-        size=${a[1]}
-        hash_plain=${a[2]}
-        hash_enc=${a[3]}
-        unset IFS
-
-        # Header
-        unit_test_header "Encrypt and Decrypt a ${label} File"
-
-        # Create plaintext file of null bytes in temp folder
-        unit_test_item "Creating Temp File to Encrypt (${label} Empty File)"
-        tmp_file=$(mktemp)
-        in_file="${tmp_file}"
-        unit_test_status  "${in_file}"
-        create_empty_file "${in_file}" "${size}"
-        unit_test_status "Expected Hash: ${hash_plain}"
-        verify_file_hash_matches "md5" "${in_file}" "${hash_plain}"
-
-        # Encrypt
-        out_file="${tmp_file}.enc"
-        unit_test_create_enc_file "${hash_enc}"
-
-        # Delete temp file
-        unit_test_item "Deleting plaintext temp file"
-        rm "${tmp_file}"
-        unit_test_status "File deleted"
-
-        # Decrypt
-        unit_test_item "Decrypting File"
-        in_file="${out_file}"
-        out_file="${tmp_file}.dec"
-        unit_test_status "${out_file}"
-        decrypt
-        unit_test_status "Expected Hash: ${hash_plain}"
-        verify_file_hash_matches "md5" "${out_file}" "${hash_plain}"
-
-        # Delete temp files
-        unit_test_item "Deleting encryption and decryption temp files"
-        rm "${tmp_file}.enc"
-        rm "${tmp_file}.dec"
-        unit_test_status "Temp files deleted"
-    done
-}
 
 # --------------------------------------------------------------
 # Run the main() function and exit with the result. "$@" is
