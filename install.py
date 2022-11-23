@@ -8,6 +8,8 @@ installer_version="P1.00"
 
 
 def install(keyword):
+    # not implemented yet 
+    action = "NI"
 
     if action !="force":
         # checking ubuntu
