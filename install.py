@@ -3,6 +3,8 @@ import sys
 import os
 import warnings
 import shutil
+import subprocess
+
 
 installer_version="P1.00"
 
@@ -78,7 +80,7 @@ def install(keyword):
     except:
         sys.exit("Could not unzip pyjq. Please try again")
 
-    os.system("python3 ./pyjq-1.0/setup.py install")
+    subprocess.call("./pyjq-1.0/setup.py install", shell=True)
 
     import functions
     
