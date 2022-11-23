@@ -43,7 +43,7 @@ logdir="/var/log/encore/general"
 # key_max the limit of keys to generate
 # default=100
 
-key_max=3
+key_max=100
 
 # Works like a key min value
 # by key_cur and key_max the range from which keys are picked
