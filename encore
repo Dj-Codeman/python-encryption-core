@@ -27,6 +27,8 @@ arguments = int(len(sys.argv))
 
 if arguments >= 2: 
     action = str(sys.argv[1])
+else:
+    show_help()
 
 if action == "write":
 
