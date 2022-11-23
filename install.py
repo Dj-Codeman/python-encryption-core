@@ -72,6 +72,20 @@ def install(keyword):
 
     hit_list = ["conf", "encore", "functions.py", "install.py", "encrypt"]
 
+    for files in hit_list:
+        
+        src = f"./{files}"
+        dst = f"/opt/encore/{files}"
+        home = f"/usr/local/bin{files}"
+        copy_file(src, dst)
+
+    if files == "encrypt":
+        os.symlink(dst, home)
+    elif files == "encore":
+        os.symlink(dst, home)
+    else :
+        relazy()
+
     # Cheking for the encrypt script first
     exists = os.path.exists("/usr/local/bin/encrypt")
 
@@ -83,20 +97,6 @@ def install(keyword):
 
     if os.path.exists(filename) == False:
         sys.exit("Encrypt file was not downloaded or imported")
-
-    for files in hit_list:
-        src = f"./{files}"
-        dst = f"/opt/encore/{files}"
-        home = f"/usr/local/bin{files}"
-
-        copy_file(src, dst)
-
-        if files == "encrypt":
-            os.symlink(dst, home)
-        elif files == "encore":
-            os.symlink(dst, home)
-        else :
-            relazy()
     
     os.system("chmod +x /opt/encore/*")
 
