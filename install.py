@@ -79,12 +79,12 @@ def install(keyword):
         home = f"/usr/local/bin{files}"
         copy_file(src, dst)
 
-    if files == "encrypt":
-        os.symlink(dst, home)
-    elif files == "encore":
-        os.symlink(dst, home)
-    else :
-        relazy()
+        if files == "encrypt":
+            os.symlink(dst, home)
+        elif files == "encore":
+            os.symlink(dst, home)
+        else :
+            relazy()
 
     # Cheking for the encrypt script first
     exists = os.path.exists("/usr/local/bin/encrypt")
