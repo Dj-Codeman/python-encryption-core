@@ -53,30 +53,32 @@ def install(keyword):
     os.system(command)
 
     
-    # Downloading wget
-    command = f"curl https://files.pythonhosted.org/packages/47/6a/62e288da7bcda82b935ff0c6cfe542970f04e29c756b0e147251b2fb251f/wget-3.2.zip --output /tmp/encore/pkgs/wget-3.2.zip"
-    os.system(command)
+    # # Downloading wget
+    # command = f"curl https://files.pythonhosted.org/packages/47/6a/62e288da7bcda82b935ff0c6cfe542970f04e29c756b0e147251b2fb251f/wget-3.2.zip --output /tmp/encore/pkgs/wget-3.2.zip"
+    # os.system(command)
 
-    # Unpacking and installing wget
-    command = f"unzip /tmp/encore/pkgs/wget-3.2.zip"
-    os.system(command)
+    # # Unpacking and installing wget
+    # command = f"unzip /tmp/encore/pkgs/wget-3.2.zip"
+    # os.system(command)
 
 
-    command = f"python3 ./wget-3.2/setup.py install"
-    os.system(command)
+    # command = f"python3 ./wget-3.2/setup.py install"
+    # os.system(command)
 
-    import wget
+    # import wget
 
 
     # Downloding pyjq
-    url = str("https://files.pythonhosted.org/packages/14/c8/03bc4f41abe4b1e900d9bc1f1cebdb79f998a5563364e6ea1533f7b228f8/pyjq-1.0.tar.gz")
-    filename = wget.download(url, out="/tmp/encore/pkgs/pyjq.tar.gz")    
+    command = f"curl https://files.pythonhosted.org/packages/14/c8/03bc4f41abe4b1e900d9bc1f1cebdb79f998a5563364e6ea1533f7b228f8/pyjq-1.0.tar.gz --output /tmp/encore/pkgs/pyjq-1.0.tar.gz"
+    os.system(command)
     
-    command = f"tar -xvf {filename}"
+    command = f"tar -xvf /tmp/encore/pkgs/pyjq-1.0.tar.gz"
     try :
         os.system(command)
     except:
-        sys.exit("Could not install pyjq. Please try again")
+        sys.exit("Could not unzip pyjq. Please try again")
+
+    os.system("python3 ./pyjq-1.0/setup.py install")
 
     import functions
     
