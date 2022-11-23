@@ -23,8 +23,10 @@ def show_help():
     else:
         print("encore update performs system wellness test then downloads the lates version of encore \n")
 
+arguments = int(len(sys.argv))
 
-action = str(sys.argv[1])
+if arguments >= 2: 
+    action = str(sys.argv[1])
 
 if action == "write":
 
