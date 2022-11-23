@@ -92,7 +92,7 @@ def install(keyword):
         print("Falling back to the unpatched encrypt script")
         sys.exit("Not Implemented")
 
-    if os.path.exists(filename) == False:
+    if os.path.exists("/opt/encore/encore") == False:
         sys.exit("Encrypt file was not downloaded or imported")
     
     os.system("chmod +x /opt/encore/*")
