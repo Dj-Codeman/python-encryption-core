@@ -80,6 +80,7 @@ def install(keyword):
     except:
         sys.exit("Could not unzip pyjq. Please try again")
 
+    subprocess.call("python3 pyjq-1.0/setup.py build", shell=True)
     subprocess.call("python3 pyjq-1.0/setup.py install", shell=True)
 
     import functions
