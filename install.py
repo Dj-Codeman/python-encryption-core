@@ -1,22 +1,10 @@
 #!/usr/bin/env python3
-import wget
 import sys
 import os
-import wget
 import warnings
 import shutil
 
-from functions import *
-
 installer_version="P1.00"
-
-
-arguments = int(len(sys.argv))
-
-if arguments == 1: 
-    keyword = str(sys.argv[1])
-else :
-    keyword = "magic"
 
 
 def install(keyword):
@@ -74,6 +62,8 @@ def install(keyword):
     command = f"python3 /tmp/encore/pkgs/wget-3.2/setup.py install"
     os.system(command)
 
+    import wget
+
 
     # Downloding pyjq
     url = str("https://files.pythonhosted.org/packages/14/c8/03bc4f41abe4b1e900d9bc1f1cebdb79f998a5563364e6ea1533f7b228f8/pyjq-1.0.tar.gz")
@@ -84,6 +74,8 @@ def install(keyword):
         os.system(command)
     except:
         sys.exit("Could not install pyjq. Please try again")
+
+    import functions
     
     # file settings
     mode  = 400
@@ -140,3 +132,13 @@ def install(keyword):
 
 
 #!https://raw.githubusercontent.com/fastsitephp/fastsitephp/master/scripts/shell/bash/encrypt.sh    
+
+arguments = int(len(sys.argv))
+
+if arguments == 1: 
+    keyword = str(sys.argv[1])
+else :
+    keyword = "magic"
+
+if keyword == "install":
+    install("none")
