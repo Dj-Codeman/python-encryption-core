@@ -4,6 +4,8 @@ import os
 import warnings
 import shutil
 import subprocess
+from functions import *
+
 
 
 installer_version="P1.00"
@@ -55,8 +57,6 @@ def install(keyword):
     os.system(command)
     
     #  for downloads use the unix curl with os.system
-
-    import functions
     
     # file settings
     mode  = 400
