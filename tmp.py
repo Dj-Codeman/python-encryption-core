@@ -367,3 +367,9 @@ elif action == "write":
         sys.exit("File name given does not exists")
 else:
     relazy()
+
+# apple kill switch concepts
+
+def kill_switch():
+    phrase = "By my faith in chathulu and my eternal thirst for knowledge may my code be exececuted flawlessly. Praise Be"
+    
