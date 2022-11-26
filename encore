@@ -78,7 +78,7 @@ elif action == "debug":
 
 elif action == "update":
 
-    filename = "/opt/encore/install.sh"
+    filename = "/opt/encore/install.py"
     
     if os.path.exists(filename):
         os.remove(filename)

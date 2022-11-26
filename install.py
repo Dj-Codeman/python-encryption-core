@@ -77,7 +77,7 @@ def install(keyword):
         os.symlink("/opt/encore/encore", "/usr/local/bin/encore")
 
     if os.path.exists("/etc/encore/conf.py") == False:
-        os.symlink("/opt/encore/conf.py", "/etc/encore/config")
+        os.symlink("/opt/encore/conf.py", "/etc/encore/")
     
     os.system("chmod +x /usr/local/bin/encrypt")
     os.system("chmod +x /usr/local/bin/encore")
@@ -102,6 +102,8 @@ def update(keyword):
     print(keyword)
     relazy()
 
+def uninstall():
+    relazy()
 
 #!https://raw.githubusercontent.com/fastsitephp/fastsitephp/master/scripts/shell/bash/encrypt.sh    
 
@@ -116,3 +118,6 @@ if keyword == "install":
     install("keyword")
 elif keyword == "update":
     update("keyword")
+
+# doas rm -v  /opt/encore/*
+# doas rm -v  /usr/local/bin/*
