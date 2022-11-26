@@ -2,7 +2,6 @@
 # rewritten encore.sh
 import sys
 import os
-import wget
 
 from functions import *
 
@@ -79,13 +78,15 @@ elif action == "debug":
 
 elif action == "update":
 
-    if os.path.exists("/tmp/install.sh"):
-        os.remove("/tmp/install.sh")
+    filename = "/opt/encore/install.sh"
+    
+    if os.path.exists(filename):
+        os.remove(filename)
     else:
         relazy()
 
-    url = str("https://raw.githubusercontent.com/Dj-Codeman/encryption-core/master/install.sh")
-    filename = wget.download(url, out="/tmp/install.sh")
+    command = f"wget --no-cache --no-cookies -O {filename} https://raw.githubusercontent.com/Dj-Codeman/python-encryption-core/main/install.py"
+    os.system(command)
 
     # count the variables set
     arguments = int(len(sys.argv))
@@ -98,7 +99,7 @@ elif action == "update":
             os.system(command)
         else :
             sys.exit("\nInvalid keyword for update ",option,"\n")
-
+            
     else:
         command = f"/bin/bash {filename}"
         os.system(command)

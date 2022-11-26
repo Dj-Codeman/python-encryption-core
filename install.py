@@ -45,21 +45,13 @@ def install(keyword):
     else :
 
         if keyword != "force":
-            sys.exit("I Don't support the distro that you use. If you do run this command with --force")
+            sys.exit("I Don't support the distro that you use. If YOU do run this command with --force")
         else :
-            warning_msg = f"This tool wasn't build for the distro that your running. Shit might be weird. Good luck"
-            warnings.warn(warning_msg, Warning)
-
-    print("Downloading additional dependencies")
-
-    command = "mkdir -pv /tmp/encore/pkgs"
-    os.system(command)
+            exit_msg = f"This tool wasn't build for the distro that your running. Shit might be weird. Good luck"
+            sys.exit(exit_msg)
     
-    #  for downloads use the unix curl with os.system
+    print("Extracting and placing files")
     
-    # file settings
-    mode  = 400
-
     hit_list = ["/opt/encore", "/etc/encore", "/var/encore", "/var/log/encore" ]
 
     for path in hit_list:
@@ -76,12 +68,19 @@ def install(keyword):
 
             src = f"./{files}"
             dst = f"/opt/encore/{files}"
-            home = f"/usr/local/bin{files}"
             copy_file(src, dst)
 
-    os.symlink("/opt/encore/encrypt", "/usr/local/bin/encrypt")
-    os.symlink("/opt/encore/encore", "/usr/local/bin/encore")
-    os.system("chmod +x /usr/local/bin/*")
+    if os.path.exists("/usr/local/bin/encrypt") == False:
+        os.symlink("/opt/encore/encrypt", "/usr/local/bin/encrypt")
+    
+    if os.path.exists("/usr/local/bin/encore") == False:
+        os.symlink("/opt/encore/encore", "/usr/local/bin/encore")
+
+    if os.path.exists("/etc/encore/config") == False:
+        os.symlink("/opt/encore/conf.py", "/etc/encore/config")
+    
+    os.system("chmod +x /usr/local/bin/encrypt")
+    os.system("chmod +x /usr/local/bin/encore")
 
     # Cheking for the encrypt script first
     exists = os.path.exists("/usr/local/bin/encrypt")
@@ -95,13 +94,10 @@ def install(keyword):
     if os.path.exists("/opt/encore/encore") == False:
         sys.exit("Encrypt file was not downloaded or imported")
 
+
+    print("Installation finished ! Running first time initialization")
     os.system("encore initialize")
     
-
-    #Done checking and installing dependencies from pkg anagers
-    # installing pip stuff 
-        
-
 
 
 #!https://raw.githubusercontent.com/fastsitephp/fastsitephp/master/scripts/shell/bash/encrypt.sh    
