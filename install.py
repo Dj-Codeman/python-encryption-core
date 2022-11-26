@@ -76,7 +76,7 @@ def install(keyword):
     if os.path.exists("/usr/local/bin/encore") == False:
         os.symlink("/opt/encore/encore", "/usr/local/bin/encore")
 
-    if os.path.exists("/etc/encore/conf.py") == False:
+    if os.path.exists("/etc/encore/config") == False:
         os.symlink("/opt/encore/conf.py", "/etc/encore/")
     
     os.system("chmod +x /usr/local/bin/encrypt")
