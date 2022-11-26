@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # rewritten encore.sh
 import sys
 import os
@@ -95,7 +95,7 @@ elif action == "update":
         option = str(sys.argv[2])
 
         if option == "force":
-            command = f"/bin/bash {filename} {option}"
+            command = f"/usr/bin/python3 {filename} {option}"
             os.system(command)
         else :
             sys.exit("\nInvalid keyword for update ",option,"\n")
