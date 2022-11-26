@@ -76,7 +76,7 @@ def install(keyword):
     if os.path.exists("/usr/local/bin/encore") == False:
         os.symlink("/opt/encore/encore", "/usr/local/bin/encore")
 
-    if os.path.exists("/etc/encore/config") == False:
+    if os.path.exists("/etc/encore/conf.py") == False:
         os.symlink("/opt/encore/conf.py", "/etc/encore/config")
     
     os.system("chmod +x /usr/local/bin/encrypt")
@@ -98,6 +98,9 @@ def install(keyword):
     print("Installation finished ! Running first time initialization")
     os.system("encore initialize")
     
+def update(keyword):
+    print(keyword)
+    relazy()
 
 
 #!https://raw.githubusercontent.com/fastsitephp/fastsitephp/master/scripts/shell/bash/encrypt.sh    
@@ -110,4 +113,6 @@ else :
     keyword = "magic"
 
 if keyword == "install":
-    install("none")
+    install("keyword")
+elif keyword == "update":
+    update("keyword")
