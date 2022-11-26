@@ -115,9 +115,9 @@ else :
     keyword = "magic"
 
 if keyword == "install":
-    install("keyword")
+    install(keyword)
 elif keyword == "update":
-    update("keyword")
+    update(keyword)
 
 # doas rm -v  /opt/encore/*
 # doas rm -v  /usr/local/bin/*
